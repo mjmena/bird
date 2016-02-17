@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class Combatant : MonoBehaviour {
-	public int health;
-	public int damage;
-
+	public int health = 100;
 	// Use this for initialization
 	void Start () {
 	
@@ -14,10 +12,11 @@ public class Combatant : MonoBehaviour {
 	void Update () {
 		
 	}
-	void OnCollisionEnter(Collision col) {
-		if(col.gameObject.name == "player") {
-            Debug.Log("Ouch");
-			health-=5;
+	void OnCollisionEnter2D(Collision2D collision) {
+		if(collision.gameObject.name == "rude_dude") {
+            health = health - 5;
+            Debug.Log("Ouch " + health);
+			
 		}
 	}
 }
