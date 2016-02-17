@@ -1,13 +1,14 @@
 fileFormatVersion: 2
 guid: 5f367c2e77384644281ce4b3c08ed8ad
-timeCreated: 1455591943
+timeCreated: 1455667928
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: player
-    21300002: GPJ_2D_Platformer_Sprites_0
+    21300002: player_move_a
     21300004: ground
     21300006: Rude Dude
+    21300008: player_move_b
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -65,17 +66,6 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: GPJ_2D_Platformer_Sprites_0
-      rect:
-        serializedVersion: 2
-        x: 89
-        y: 98
-        width: 27
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
     - name: ground
       rect:
         serializedVersion: 2
@@ -94,6 +84,28 @@ TextureImporter:
         y: 49
         width: 16
         height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_move_a
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_move_b
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
