@@ -12,6 +12,10 @@ public class Damageable : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 		if(collision.gameObject.name == "rude_dude") {
             health = health - 5;
+            if(health < 5)
+            {
+                health = 1; 
+            }
 		}
 	}
 }
