@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyController : MonoBehaviour {
+public class HecticMovement : MonoBehaviour {
 	private Rigidbody2D body;
 
 	public float speed;
