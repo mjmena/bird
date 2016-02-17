@@ -15,9 +15,9 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-        float current_health = target.GetComponent<Combatant>().health;
-        Debug.Log("Current Health " + current_health/100);
-        bar.rectTransform.localScale = new Vector3(current_health / 100, bar.rectTransform.localScale.y, bar.rectTransform.localScale.z);
+        float current_health = target.GetComponent<Damageable>().health;
+        float max_health = target.GetComponent<Damageable>().max_health;
+        bar.rectTransform.localScale = new Vector3(current_health / max_health, bar.rectTransform.localScale.y, bar.rectTransform.localScale.z);
     }
 
 }
