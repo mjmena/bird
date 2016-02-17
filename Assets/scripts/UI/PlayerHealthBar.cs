@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Health : MonoBehaviour
+public class PlayerHealthBar : MonoBehaviour
 {
 
     public GameObject target;

@@ -17,5 +17,5 @@ public class Damageable : MonoBehaviour {
                 health = 1; 
             }
 		}
-	}
+    }
 }
