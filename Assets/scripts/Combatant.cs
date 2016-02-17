@@ -16,6 +16,7 @@ public class Combatant : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.name == "player") {
+            Debug.Log("Ouch");
 			health-=5;
 		}
 	}
