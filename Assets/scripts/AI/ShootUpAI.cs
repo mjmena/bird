@@ -4,7 +4,7 @@ using System.Collections;
 public class ShootUpAI : MonoBehaviour {
     public GameObject projectile;
     public float speed;
-    private const int SHOOT_COOLDOWN = 30;
+    private const int SHOOT_COOLDOWN = 10;
 
     void Start () {
         speed = 5;
