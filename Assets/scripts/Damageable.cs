@@ -13,14 +13,14 @@ public class Damageable : MonoBehaviour {
 		if (gameObject.name == "player") {
 			if (collision.gameObject.name == "rude_dude") {
 				health = health - 5;
-			} else if (collision.gameObject.name == "bullet") {
+			} else if (collision.gameObject.name == "projectile") {
 				health = health - 5;
 			}
 		} else if (gameObject.name == "rude_dude") {
 			if (collision.gameObject.name == "player") {
 				health = health - 1;
 			}
-		} else if (gameObject.name == "bullet") {
+		} else if (gameObject.name == "projectile") {
 			health = health - 1;
 		}
 
