@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RandomProjectileAI : MonoBehaviour {
+public class ShootUpAI : MonoBehaviour {
 	private int shoot_cooldown;
 	public float speed = 1; 
 	public GameObject projectile;
 
-	// Use this for initialization
 	void Start () {
 		shoot_cooldown = 30;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if(shoot_cooldown == 0) {
 
