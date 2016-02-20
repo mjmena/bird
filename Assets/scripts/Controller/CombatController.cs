@@ -102,4 +102,8 @@ public class CombatController : MonoBehaviour {
             }
 		}
 	}
+
+	public int GetNextElement() {
+		return (int)next_element;
+	}
 }
