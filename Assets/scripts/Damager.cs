@@ -6,16 +6,12 @@ public class Damager : MonoBehaviour {
     public int lifetime = 5;
     private float birth = 0;
 
-    void Start()
-    {
+    void Start() {
         birth = Time.time;
     }
-    void Update()
-    {
-        if (birth + lifetime <= Time.time)
-        {
-            Debug.Log(birth + lifetime);
-            Debug.Log(Time.time);
+
+    void Update() {
+        if (birth + lifetime <= Time.time) {
             Destroy(gameObject);
         }
     }
