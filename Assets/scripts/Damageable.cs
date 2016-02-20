@@ -11,16 +11,15 @@ public class Damageable : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (gameObject.name == "player") {
-			if (collision.gameObject.name == "rude_dude") {
-				health = health - 5;
-			} else if (collision.gameObject.name == "projectile") {
-				health = health - 5;
+			if (collision.gameObject.name == "enemy_projectile") {
+				health = health - collision.gameObject.GetComponent<Damager>().damage;
 			}
 		} else if (gameObject.name == "rude_dude") {
-			if (collision.gameObject.name == "player") {
-				health = health - 1;
-			}
-		} else if (gameObject.name == "projectile") {
+			if (collision.gameObject.name == "player_projectile")
+            {
+                health = health - collision.gameObject.GetComponent<Damager>().damage;
+            }
+        } else if (gameObject.name == "player_projectile" || gameObject.name == "enemy_projectile") {
 			health = health - 1;
 		}
 

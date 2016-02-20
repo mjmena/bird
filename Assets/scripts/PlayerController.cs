@@ -2,10 +2,13 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+    public GameObject projectile;
 	private Rigidbody2D body;
 	private Animator anim;
 
-	public float speed;
+    public float ability_cooldown = .5f; //seconds
+    private float time_since_last_ability;
+    public float speed;
 
 
 	// Use this for initialization
@@ -16,9 +19,22 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		updateMovement ();
+        updateMovement ();
 		updateAnimation ();
-	}
+
+        if (Input.GetKey(KeyCode.Space) && time_since_last_ability + ability_cooldown <= Time.time)
+        {
+            Vector3 direction = transform.right;
+            Vector3 bullet_position = transform.position + direction;
+            Vector3 bullet_velocity = direction * speed;
+
+            GameObject go = Instantiate(projectile, bullet_position, transform.rotation) as GameObject;
+            go.name = "player_projectile";
+            go.GetComponent<Rigidbody2D>().velocity = bullet_velocity;
+
+            time_since_last_ability = Time.time;
+        }
+    }
 
 	void updateMovement() {
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
