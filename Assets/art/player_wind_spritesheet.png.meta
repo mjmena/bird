@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 4d0617a84024df94185c5ea50f50ab07
-timeCreated: 1455672507
+guid: 4bdebcc3e8709ec4fb536345e5ddf7da
+timeCreated: 1455941319
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: idle
-    21300002: move_a
-    21300004: move_b
-    21300006: move_c
-    21300008: move_d
+    21300000: player_wind_idle
+    21300002: player_wind_moving_a
+    21300004: player_wind_moving_b
+    21300006: player_wind_moving_c
+    21300008: player_wind_moving_d
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,7 +55,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: idle
+    - name: player_wind_idle
       rect:
         serializedVersion: 2
         x: 0
@@ -66,7 +66,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: move_a
+    - name: player_wind_moving_a
       rect:
         serializedVersion: 2
         x: 0
@@ -77,7 +77,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: move_b
+    - name: player_wind_moving_b
       rect:
         serializedVersion: 2
         x: 16
@@ -88,7 +88,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: move_c
+    - name: player_wind_moving_c
       rect:
         serializedVersion: 2
         x: 32
@@ -99,7 +99,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: move_d
+    - name: player_wind_moving_d
       rect:
         serializedVersion: 2
         x: 48
