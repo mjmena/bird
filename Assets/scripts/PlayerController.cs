@@ -19,12 +19,11 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        updateMovement ();
-		updateAnimation ();
-
+        updateMovement();
+		
         if (Input.GetKey(KeyCode.Space) && time_since_last_ability + ability_cooldown <= Time.time)
         {
-            Vector3 direction = transform.right;
+            Vector3 direction = transform.up;
             Vector3 bullet_position = transform.position + direction;
             Vector3 bullet_velocity = direction * speed;
 
@@ -37,37 +36,38 @@ public class PlayerController : MonoBehaviour {
     }
 
 	void updateMovement() {
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
-			body.velocity = new Vector2 (body.velocity.x, speed);
+        float x = 0;
+        float y = 0; 
+		if (Input.GetKey(KeyCode.W)) {
+            y =+ 1;
 		}
 
-		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-			body.velocity = new Vector2 (-speed, body.velocity.y);
+		if (Input.GetKey(KeyCode.A)) {
+            x = -1;
 		}
 
-		if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-			body.velocity = new Vector2 (body.velocity.x, -speed);
+		if (Input.GetKey(KeyCode.S)) {
+			y =- 1;
 		}
 
-		if (Input.GetKey(KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
-			body.velocity = new Vector2 (speed, body.velocity.y);
+		if (Input.GetKey(KeyCode.D)) {
+			x =+ 1;
 		}
 
-		if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))) {
-			body.velocity = new Vector2 (0, body.velocity.y);
-		}
+        Vector2 unit_vector = new Vector2(x, y);
+        unit_vector.Normalize();
+       
+        body.velocity = unit_vector * speed;
+        if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0)
+        {
+            float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
+            body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
+            anim.SetBool("is_moving", true);
 
-		if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))) {
-			body.velocity = new Vector2 (body.velocity.x, 0);
-		}
-	}
-
-	void updateAnimation() {
-		if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0) {
-			float animDirection = Mathf.Atan2(body.velocity.y, body.velocity.x);
-			body.transform.rotation = Quaternion.Euler (0, 0, animDirection * 180/Mathf.PI);
-		}
-
-		anim.SetFloat ("speed", Mathf.Abs (Mathf.Pow (body.velocity.x, 2) + Mathf.Pow (body.velocity.y, 2)));
-	}
+        }
+        else
+        {
+            anim.SetBool("is_moving", false);
+        }
+    }
 }
