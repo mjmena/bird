@@ -14,7 +14,8 @@ public class ShootUpAI : MonoBehaviour {
 
 			GameObject go = Instantiate(projectile, bullet_position, transform.rotation) as GameObject;
 			go.name = "enemy_projectile";
-			go.GetComponent<Rigidbody2D> ().velocity = bullet_velocity;
+            go.tag = gameObject.tag;
+            go.GetComponent<Rigidbody2D> ().velocity = bullet_velocity;
             go.GetComponent<Damager>().damage = 10;
 		}
 	}

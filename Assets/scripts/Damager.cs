@@ -2,17 +2,27 @@
 using System.Collections;
 
 public class Damager : MonoBehaviour {
-    public int damage = 1;
-    public int lifetime = 5;
+    public int damage;
+    public float lifetime;
     private float birth = 0;
 
-    void Start() {
+    protected void Start() {
         birth = Time.time;
     }
 
-    void Update() {
+    protected void Update() {
         if (birth + lifetime <= Time.time) {
             Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(gameObject.tag != collision.gameObject.tag){
+            if(collision.gameObject.GetComponent<Damageable>() != null){
+                collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
+            }
+            lifetime = 0;
         }
     }
 }

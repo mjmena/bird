@@ -21,13 +21,16 @@ public class MovementController : MonoBehaviour {
 	void Update () {
 		if (lock_start + lock_duration <= Time.time) {
 			updateMovement ();
-            if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0){
-                float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
-                body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
-                anim.SetBool("is_moving", true);
-            }else {
-                anim.SetBool("is_moving", false);
-            }
+        }
+
+        if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0)
+        {
+            float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
+            body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
+            anim.SetBool("is_moving", true);
+        }
+        else {
+            anim.SetBool("is_moving", false);
         }
     }
 
@@ -56,8 +59,8 @@ public class MovementController : MonoBehaviour {
         body.velocity = unit_vector * speed;
     }
 
-	public void LockTrajectory(float time) {
+	public void LockState(float duration) {
 		lock_start = Time.time;
-		lock_duration = time;
+		lock_duration = duration;
 	}
 }

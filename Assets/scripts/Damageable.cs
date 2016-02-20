@@ -2,29 +2,35 @@
 using System.Collections;
 
 public class Damageable : MonoBehaviour {
-	public int max_health = 100;
-    public int health;  
-	// Use this for initialization
-	void Start () {
+	public float max_health = 100f;
+    public float health;
+
+    private float lock_start = 0;
+    private float lock_duration = 0;
+
+    void Start () {
         health = max_health;
 	}
-	
-	void OnCollisionEnter2D(Collision2D collision) {
-		if (gameObject.name == "player") {
-			if (collision.gameObject.name == "enemy_projectile") {
-				health = health - collision.gameObject.GetComponent<Damager>().damage;
-			}
-		} else if (gameObject.name == "rude_dude") {
-			if (collision.gameObject.name == "player_projectile")
-            {
-                health = health - collision.gameObject.GetComponent<Damager>().damage;
-            }
-        } else if (gameObject.name == "player_projectile" || gameObject.name == "enemy_projectile") {
-			health = health - 1;
-		}
 
-		if (health <= 0) {
-			Destroy (gameObject);
-		}
+    void Update()
+    {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void LockState(float duration)
+    {
+        lock_start = Time.time;
+        lock_duration = duration;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (lock_start + lock_duration <= Time.time)
+        {
+            health -= damage;
+        }
     }
 }
