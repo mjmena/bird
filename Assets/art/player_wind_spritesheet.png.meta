@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4bdebcc3e8709ec4fb536345e5ddf7da
-timeCreated: 1455941319
+timeCreated: 1456017208
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,15 @@ TextureImporter:
     21300004: player_wind_moving_b
     21300006: player_wind_moving_c
     21300008: player_wind_moving_d
+    21300010: player_wind_spritesheet_0
+    21300012: player_wind_spritesheet_1
+    21300014: player_wind_spritesheet_2
+    21300016: player_wind_spritesheet_3
+    21300018: player_wind_spritesheet_4
+    21300020: player_wind_spritesheet_5
+    21300022: player_wind_spritesheet_6
+    21300024: player_wind_spritesheet_7
+    21300026: player_wind_spritesheet_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,7 +64,18 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: player_wind_idle
+    - name: player_wind_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_wind_spritesheet_1
       rect:
         serializedVersion: 2
         x: 0
@@ -66,7 +86,40 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: player_wind_moving_a
+    - name: player_wind_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_wind_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_wind_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_wind_spritesheet_5
       rect:
         serializedVersion: 2
         x: 0
@@ -77,7 +130,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: player_wind_moving_b
+    - name: player_wind_spritesheet_6
       rect:
         serializedVersion: 2
         x: 16
@@ -88,7 +141,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: player_wind_moving_c
+    - name: player_wind_spritesheet_7
       rect:
         serializedVersion: 2
         x: 32
@@ -99,7 +152,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: player_wind_moving_d
+    - name: player_wind_spritesheet_8
       rect:
         serializedVersion: 2
         x: 48
