@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Effect : MonoBehaviour
 {
-    public float lifetime;
+    private float lifetime;
     private float birth = 0;
 
     protected void Start()

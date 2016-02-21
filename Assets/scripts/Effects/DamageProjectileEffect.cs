@@ -3,12 +3,6 @@ using System.Collections;
 
 public class DamageProjectileEffect : Effect {
     public float damage;
-    private Rigidbody2D body;
-
-    new void Start () {
-        base.Start();
-        body = GetComponent<Rigidbody2D>();
-	}
 	
 	void OnCollisionEnter2D(Collision2D collision)
     {
@@ -19,4 +13,6 @@ public class DamageProjectileEffect : Effect {
 
         SetLifetime(0);
     }
+
+
 }

@@ -40,19 +40,19 @@ public class MovementController : MonoBehaviour {
         float x = 0;
 		float y = 0;
 		if (Input.GetKey(KeyCode.W)) {
-            y =+ 1;
+            y += 1;
 		}
 
 		if (Input.GetKey(KeyCode.A)) {
-            x = -1;
+            x -= 1;
 		}
 
 		if (Input.GetKey(KeyCode.S)) {
-			y =- 1;
+			y -= 1;
 		}
 
 		if (Input.GetKey(KeyCode.D)) {
-			x =+ 1;
+			x += 1;
 		}
 
         Vector2 unit_vector = new Vector2(x, y);
