@@ -19,7 +19,9 @@ public class MovementController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if (lock_start + lock_duration <= Time.time) {
+			anim.SetBool("is_dashing", false);
 			updateMovement ();
         }
 
@@ -27,10 +29,10 @@ public class MovementController : MonoBehaviour {
         {
             float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
             body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
-            anim.SetBool("is_moving", true);
+            anim.SetBool("is_walking", true);
         }
         else {
-            anim.SetBool("is_moving", false);
+			anim.SetBool("is_walking", false);
         }
     }
 

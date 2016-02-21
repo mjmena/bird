@@ -65,6 +65,7 @@ public class CombatController : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			if (current_element == Element.Wind && current_style == Style.Hawk) {
+				GetComponent<Animator> ().SetBool ("is_dashing", true);
 				body.velocity = transform.up * movement_controller.speed * 5;
 				movement_controller.LockState(.2f);
 
