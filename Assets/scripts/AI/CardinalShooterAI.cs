@@ -6,11 +6,11 @@ public class CardinalShooterAI : MonoBehaviour
     public GameObject projectile;
     public float projectile_speed;
     public float shoot_cooldown;
-    private float last_shot; 
+    private float last_shot = 0; 
 
     void Update()
     {
-        if (Time.time - last_shot > shoot_cooldown)
+        if (last_shot + shoot_cooldown < Time.time)
         {
             spawnProjectile(transform.up);
             spawnProjectile(-transform.up);
@@ -33,6 +33,6 @@ public class CardinalShooterAI : MonoBehaviour
         go.tag = gameObject.tag;
         go.GetComponent<Rigidbody2D>().velocity = bullet_velocity;
         go.GetComponent<DamageProjectileEffect>().damage = 10;
-        go.GetComponent<DamageProjectileEffect>().SetLifetime(1);
+        go.GetComponent<DamageProjectileEffect>().SetLifetime(2);
     }
 }
