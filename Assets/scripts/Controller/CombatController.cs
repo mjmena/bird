@@ -13,7 +13,7 @@ public class CombatController : MonoBehaviour {
 	private Style current_style = Style.Hawk;
 
 	private Element next_element = Element.None;
-
+    public GameObject wind_turtle;
     public GameObject water_turtle;
     public GameObject fire_hawk;
     
@@ -64,8 +64,6 @@ public class CombatController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			Debug.Log ("Using move: " + current_element.ToString () + ", " + current_style.ToString ());
-
 			if (current_element == Element.Wind && current_style == Style.Hawk) {
 				body.velocity = transform.up * movement_controller.speed * 5;
 				movement_controller.LockState(.2f);
@@ -76,15 +74,32 @@ public class CombatController : MonoBehaviour {
                 movement_controller.LockState (1f);
                 health.LockState(1f);
                   
-            } else if (current_element == Element.Water && current_style == Style.Turtle){
+            }
+            else if (current_element == Element.Wind && current_style == Style.Turtle)
+            {
+                GameObject clone = Instantiate(wind_turtle, transform.position, transform.rotation) as GameObject;
+                Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                clone.name = "wind_turtle_zone";
+                clone.tag = gameObject.tag;
+                PulseEffect wind_turtle_zone = clone.GetComponent<PulseEffect>();
+                wind_turtle_zone.lifetime = .5f;
+                wind_turtle_zone.radius = .5f;
+                wind_turtle_zone.velocity = 40f;
+                wind_turtle_zone.acceleration = -10f;
+                wind_turtle_zone.origin = transform;
+            }
+            else if (current_element == Element.Water && current_style == Style.Turtle)
+            {
                 GameObject go = Instantiate(water_turtle, transform.position, transform.rotation) as GameObject;
                 go.name = "water_turtle_zone";
                 go.tag = gameObject.tag;
-                ZoneDamager water_turtle_zone = go.GetComponent<ZoneDamager>();
-                water_turtle_zone.damage = 25;
-                water_turtle_zone.lifetime = 1f;
-                water_turtle_zone.radius = 1f;
-                water_turtle_zone.expansion_rate = 1f;
+                DamagePulseEffect water_turtle_zone = go.GetComponent<DamagePulseEffect>();
+                water_turtle_zone.damage = 25f;
+                water_turtle_zone.lifetime = 4.5f;
+                water_turtle_zone.radius = 2f;
+                water_turtle_zone.velocity = 2f;
+                water_turtle_zone.acceleration = -1f;
+                water_turtle_zone.origin = transform;
             }
             else if (current_element == Element.Fire && current_style == Style.Hawk) {
 				Vector3 direction = transform.up;
@@ -96,9 +111,9 @@ public class CombatController : MonoBehaviour {
                 go.tag = gameObject.tag;
 
                 go.GetComponent<Rigidbody2D>().velocity = bullet_velocity;
-                Damager fire_hawk_projectile = go.GetComponent<Damager>();
+                DamageProjectileEffect fire_hawk_projectile = go.GetComponent<DamageProjectileEffect>();
                 fire_hawk_projectile.damage = 10;
-                fire_hawk_projectile.lifetime = 1;
+                fire_hawk_projectile.SetLifetime(1);
             }
 		}
 	}

@@ -12,12 +12,13 @@ public class EnemyHealthBar : MonoBehaviour
 
     void Update()
     {
-        if(target == null)
+        if(target == null || target.GetComponent<Damageable>().health < 0 )
         {
             Destroy(container);
         }
         else
         {
+            
             float current_health = target.GetComponent<Damageable>().health;
             float max_health = target.GetComponent<Damageable>().max_health;
             text.text = "" + (int)Mathf.Ceil(current_health) + "/" + max_health;

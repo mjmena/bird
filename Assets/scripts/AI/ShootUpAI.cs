@@ -12,11 +12,12 @@ public class ShootUpAI : MonoBehaviour {
 			Vector3 bullet_position = transform.position + direction;
 			Vector3 bullet_velocity = direction * speed;
 
-			GameObject go = Instantiate(projectile, bullet_position, transform.rotation) as GameObject;
+            GameObject go = Instantiate(projectile, bullet_position, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI - 90)) as GameObject;
 			go.name = "enemy_projectile";
             go.tag = gameObject.tag;
             go.GetComponent<Rigidbody2D> ().velocity = bullet_velocity;
-            go.GetComponent<Damager>().damage = 10;
-		}
+            go.GetComponent<DamageProjectileEffect>().damage = 10;
+            go.GetComponent<DamageProjectileEffect>().SetLifetime(1);
+        }
 	}
 }
