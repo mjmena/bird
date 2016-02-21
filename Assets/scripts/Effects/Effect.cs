@@ -4,7 +4,7 @@ using System.Collections;
 public class Effect : MonoBehaviour
 {
     private float lifetime;
-    private float birth = 0;
+    private float birth;
 
     protected void Start()
     {
@@ -33,5 +33,4 @@ public class Effect : MonoBehaviour
     {
         this.lifetime = lifetime;
     }
-
 }

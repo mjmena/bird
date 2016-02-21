@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class DamageInstantaneousEffect : Effect{
-    private float damage;
+    public float damage;
 
     new void Start()
     {

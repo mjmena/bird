@@ -23,17 +23,16 @@ public class MovementController : MonoBehaviour {
 		if (lock_start + lock_duration <= Time.time) {
 			anim.SetBool("is_dashing", false);
 			updateMovement ();
-        }
-
-        if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0)
-        {
-            float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
-            body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
-            anim.SetBool("is_walking", true);
-        }
-        else {
-			anim.SetBool("is_walking", false);
-        }
+            if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0)
+            {
+                float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
+                body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
+                anim.SetBool("is_walking", true);
+            }
+            else {
+                anim.SetBool("is_walking", false);
+            }
+        }       
     }
 
 	void updateMovement() {

@@ -16,6 +16,7 @@ public class CombatController : MonoBehaviour {
     public GameObject wind_tiger;
     public GameObject wind_turtle;
     public GameObject wind_bear;
+    public GameObject earth_hawk;
     public GameObject water_turtle;
     public GameObject fire_hawk;
     
@@ -121,9 +122,22 @@ public class CombatController : MonoBehaviour {
             wind_bear_zone.velocity = .5f;
             wind_bear_zone.acceleration = 0f;
             wind_bear_zone.SetVortexStrength(1.2f);
-            GameObject temp = new GameObject();
-            temp.transform.position = transform.position;
-            wind_bear_zone.origin = temp.transform;
+            wind_bear_zone.origin = wind_bear_zone.transform;
+        }
+        else if (current_element == Element.Earth && current_style == Style.Hawk)
+        {
+            GameObject clone = Instantiate(earth_hawk, transform.position, transform.rotation) as GameObject;
+            Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            clone.name = "earth_hawk";
+            clone.tag = gameObject.tag;
+
+            DelayedEffect earth_hawk_effect = clone.GetComponent<DelayedEffect>();
+            earth_hawk_effect.SetLifetime(2f);
+            earth_hawk_effect.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
+
+            body.velocity = -transform.up * movement_controller.speed * 3;
+            movement_controller.LockState(.2f);
+            GetComponent<Animator>().SetBool("is_dashing", true);
         }
         else if (current_element == Element.Earth && current_style == Style.Bear)
         {
@@ -131,6 +145,7 @@ public class CombatController : MonoBehaviour {
 
             movement_controller.LockState(1f);
             health.LockState(1f);
+            GetComponent<Animator>().SetBool("is_walking", false);
         }
         else if (current_element == Element.Water && current_style == Style.Turtle)
         {
@@ -138,7 +153,7 @@ public class CombatController : MonoBehaviour {
             go.name = "water_turtle_zone";
             go.tag = gameObject.tag;
             DamagePulseEffect water_turtle_zone = go.GetComponent<DamagePulseEffect>();
-            water_turtle_zone.damage = 25f;
+            water_turtle_zone.SetDamage(25f);
             water_turtle_zone.SetLifetime(4.5f);
             water_turtle_zone.radius = 2f;
             water_turtle_zone.velocity = 2f;
