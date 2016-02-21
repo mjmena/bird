@@ -1,36 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WindBearEffect : MonoBehaviour {
-    private float birth;
-    private float delay = 2f;
-    private float lifetime = float.MaxValue;
-    private float damage = 49f; 
+public class WindBearEffect : PulseEffect {
+    private float vortex_strength;
 
-    void Start()
+    void OnTriggerStay2D(Collider2D collider)
     {
-        birth = Time.time;
-        GetComponent<Collider2D>().enabled = false;
-    }
+        if (collider.tag == "enemy")
+        {
+            Vector3 toward_center_vector = transform.position - collider.transform.position;
+            Vector3 toward_center_vector_strength = (toward_center_vector / toward_center_vector.magnitude) * vortex_strength;
 
-    void Update()
-    {
-        if (birth + delay + lifetime <= Time.time)
-        {
-            Destroy(gameObject);
-        }
-        else if (birth + delay <= Time.time)
-        {
-            lifetime = 0;
-            GetComponent<Collider2D>().enabled = true;
+            collider.GetComponent<Rigidbody2D>().velocity += new Vector2(toward_center_vector_strength.x, toward_center_vector_strength.y);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void SetVortexStrength(float vortex_strength)
     {
-        if (collision.gameObject.GetComponent<Damageable>() != null)
-        {
-            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
-        }
+        this.vortex_strength = vortex_strength/10;
     }
 }

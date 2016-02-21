@@ -5,7 +5,7 @@ public class WaterBearEffect : MonoBehaviour
 {
     private float birth;
     private float lifetime = 3;
-    
+
     private float radius = 4;
     private float heal = 50;
 
@@ -21,14 +21,14 @@ public class WaterBearEffect : MonoBehaviour
         {
             Destroy(gameObject);
         }
-       
+
     }
 
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Damageable>() != null && collision.gameObject.name == "player")
         {
-            collision.gameObject.GetComponent<Damageable>().Heal(heal*Time.deltaTime/lifetime);
+            collision.gameObject.GetComponent<Damageable>().Heal(heal * Time.deltaTime / lifetime);
         }
     }
 }

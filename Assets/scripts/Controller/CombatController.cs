@@ -20,6 +20,7 @@ public class CombatController : MonoBehaviour
     public GameObject earth_hawk;
     public GameObject water_bear;
     public GameObject water_turtle;
+    public GameObject water_tiger;
     public GameObject fire_hawk;
 
     void Start()
@@ -131,7 +132,7 @@ public class CombatController : MonoBehaviour
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             clone.name = "wind_bear_zone";
             clone.tag = gameObject.tag;
-            VortexPulseEffect wind_bear_zone = clone.GetComponent<VortexPulseEffect>();
+            WindBearEffect wind_bear_zone = clone.GetComponent<WindBearEffect>();
             wind_bear_zone.SetLifetime(5f);
             wind_bear_zone.radius = 3f;
             wind_bear_zone.velocity = .5f;
@@ -177,6 +178,10 @@ public class CombatController : MonoBehaviour
             water_turtle_zone.acceleration = -1f;
             water_turtle_zone.origin = transform;
         }
+        else if (current_element == Element.Water && current_style == Style.Tiger)
+        {
+            Instantiate(water_tiger, transform.position, transform.rotation);
+        }
         else if (current_element == Element.Fire && current_style == Style.Hawk)
         {
             castFireHawk(transform.up, transform.rotation);
@@ -187,17 +192,7 @@ public class CombatController : MonoBehaviour
 
     void castFireHawk(Vector3 direction, Quaternion rotation)
     {
-        float fire_hawk_projectile_speed = 5;
-        Vector3 bullet_position = transform.position + direction;
-        Vector3 bullet_velocity = direction * fire_hawk_projectile_speed;
-
-        GameObject go = Instantiate(fire_hawk, bullet_position, rotation) as GameObject;
-        go.name = "fire_hawk_projectile";
-        go.tag = gameObject.tag;
-
-        go.GetComponent<Rigidbody2D>().velocity = bullet_velocity;
-        DamageProjectileEffect fire_hawk_projectile = go.GetComponent<DamageProjectileEffect>();
-        fire_hawk_projectile.damage = 10;
-        fire_hawk_projectile.SetLifetime(1);
+        GameObject go = Instantiate(fire_hawk, transform.position + direction, rotation) as GameObject;
+        go.GetComponent<FireHawkEffect>().SetDirection(direction);
     }
 }

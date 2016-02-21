@@ -31,8 +31,6 @@ public class CardinalShooterAI : MonoBehaviour
         
         go.name = "enemy_projectile";
         go.tag = gameObject.tag;
-        go.GetComponent<Rigidbody2D>().velocity = bullet_velocity;
-        go.GetComponent<DamageProjectileEffect>().damage = 10;
-        go.GetComponent<DamageProjectileEffect>().SetLifetime(2);
+        go.GetComponent<FireHawkEffect>().SetDirection(direction);
     }
 }
