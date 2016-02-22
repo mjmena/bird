@@ -23,6 +23,7 @@ public class CombatController : MonoBehaviour
     public GameObject water_turtle;
     public GameObject water_tiger;
     public GameObject fire_hawk;
+    public GameObject fire_bear;
 
     void Start()
     {
@@ -166,6 +167,11 @@ public class CombatController : MonoBehaviour
             castFireHawk(transform.up, transform.rotation);
             castFireHawk(transform.up + transform.right, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 45));
             castFireHawk(transform.up - transform.right, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 45));
+        }
+        else if (current_element == Element.Fire && current_style == Style.Bear)
+        {
+            GameObject clone = Instantiate(fire_bear, transform.position+transform.up, transform.rotation) as GameObject;
+            Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
     }
 
