@@ -4,71 +4,42 @@ using System.Collections;
 public class MovementController : MonoBehaviour
 {
     private Rigidbody2D body;
-    private Animator anim;
+    private Animator animator;
 
     public float speed;
-
-    private float lock_start = 0;
-    private float lock_duration = 0;
+    private float input_disabled_until = 0;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        body.WakeUp();
-        if (lock_start + lock_duration <= Time.time)
+        body.WakeUp();    
+        if (input_disabled_until <= Time.time)
         {
-            anim.SetBool("is_dashing", false);
-            updateMovement();
-            if (Mathf.Abs(body.velocity.x) > 0 || Mathf.Abs(body.velocity.y) > 0)
+            body.velocity = Vector2.zero;
+            body.angularVelocity = 0;
+            animator.SetBool("is_dashing", false);
+
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            body.MovePosition(body.position + input.normalized * speed * Time.deltaTime);
+
+            if (input != Vector2.zero)
             {
-                float direction = Mathf.Atan2(body.velocity.y, body.velocity.x);
-                body.transform.rotation = Quaternion.Euler(0, 0, direction * 180 / Mathf.PI - 90);
-                anim.SetBool("is_walking", true);
+                float direction = Mathf.Atan2(input.y, input.x);
+                body.MoveRotation(direction * Mathf.Rad2Deg - 90);
+                animator.SetBool("is_walking", true);
             }
             else {
-                anim.SetBool("is_walking", false);
+                animator.SetBool("is_walking", false);
             }
         }
     }
-
-    void updateMovement()
+    public void DisablePlayerInput(float duration)
     {
-        float x = 0;
-        float y = 0;
-        if (Input.GetKey(KeyCode.W))
-        {
-            y += 1;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            x -= 1;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            y -= 1;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            x += 1;
-        }
-
-        Vector2 unit_vector = new Vector2(x, y);
-        unit_vector.Normalize();
-
-        body.velocity = unit_vector * speed;
-    }
-
-    public void LockState(float duration)
-    {
-        lock_start = Time.time;
-        lock_duration = duration;
+        input_disabled_until = Time.time + duration;
     }
 }

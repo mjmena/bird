@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CombatController : MonoBehaviour
 {
@@ -103,8 +104,9 @@ public class CombatController : MonoBehaviour
         if (current_element == Element.Wind && current_style == Style.Hawk)
         {
             GetComponent<Animator>().SetBool("is_dashing", true);
-            body.velocity = transform.up * movement_controller.speed * 5;
-            movement_controller.LockState(.2f);
+            //body.velocity = transform.up * movement_controller.speed * 5;
+            body.AddForce(transform.up * movement_controller.speed * 5, ForceMode2D.Impulse);
+            movement_controller.DisablePlayerInput(.2f);
 
         }
         else if (current_element == Element.Wind && current_style == Style.Tiger)
@@ -130,16 +132,15 @@ public class CombatController : MonoBehaviour
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             
             clone.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
-
-            body.velocity = -transform.up * movement_controller.speed * 3;
-            movement_controller.LockState(.2f);
+            body.AddForce(-transform.up * movement_controller.speed * 2.5f, ForceMode2D.Impulse);
+            movement_controller.DisablePlayerInput(.2f);
             GetComponent<Animator>().SetBool("is_dashing", true);
         }
         else if (current_element == Element.Earth && current_style == Style.Bear)
         {
             body.velocity = Vector3.zero;
 
-            movement_controller.LockState(1f);
+            movement_controller.DisablePlayerInput(1f);
             health.LockState(1f);
             GetComponent<Animator>().SetBool("is_walking", false);
         }
@@ -180,5 +181,12 @@ public class CombatController : MonoBehaviour
         GameObject go = Instantiate(fire_hawk, transform.position + direction, rotation) as GameObject;
         go.tag = "ally";
         go.GetComponent<FireHawkEffect>().SetDirection(direction);
+    }
+
+    void OnDestroy()
+    {
+        string scene = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadScene(scene);
+        SceneManager.LoadScene(scene);
     }
 }
