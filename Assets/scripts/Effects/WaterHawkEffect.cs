@@ -5,10 +5,9 @@ public class WaterHawkEffect : MonoBehaviour
 {
     public GameObject orbiter; 
     private float birth;
-    private float lifetime = 10;
-    private float damage = 10;
+    private float lifetime = 2;
+    private float damage = 30;
     private float speed = 15;
-    public Vector3 direction; 
      
     void Start()
     {
@@ -22,19 +21,22 @@ public class WaterHawkEffect : MonoBehaviour
     void spawnOrbiter(Vector3 position)
     {
         GameObject clone = Instantiate(orbiter, position, transform.rotation) as GameObject;
-        clone.transform.parent = transform;
+        WaterHawkOrbiterEffect orbiter_effect = clone.GetComponent<WaterHawkOrbiterEffect>();
+        orbiter_effect.center = transform.position;
+        orbiter_effect.direction = transform.up;
+        orbiter_effect.speed = speed;
+        orbiter_effect.lifetime = lifetime;
+        orbiter_effect.damage = damage / 2;
     }
 
 
     void Update()
     {
-
-        transform.position += direction*Time.deltaTime*speed; 
         if (birth + lifetime <= Time.time)
         {
             Destroy(gameObject);
         }
-        transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180 * Time.deltaTime);
+        transform.position += transform.up*Time.deltaTime*speed; 
     }
 
     void OnCollisionEnter2D(Collision2D collision)

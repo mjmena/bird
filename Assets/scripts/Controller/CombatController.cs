@@ -145,7 +145,6 @@ public class CombatController : MonoBehaviour
         else if (current_element == Element.Water && current_style == Style.Hawk)
         {
             GameObject go = Instantiate(water_hawk, transform.position + transform.up + transform.up, transform.rotation) as GameObject;
-            go.GetComponent<WaterHawkEffect>().direction = transform.up;
         }
         else if (current_element == Element.Water && current_style == Style.Bear)
         {
