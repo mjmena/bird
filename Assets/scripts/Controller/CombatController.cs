@@ -18,6 +18,7 @@ public class CombatController : MonoBehaviour
     public GameObject wind_turtle;
     public GameObject wind_bear;
     public GameObject earth_hawk;
+    public GameObject water_hawk;
     public GameObject water_bear;
     public GameObject water_turtle;
     public GameObject water_tiger;
@@ -110,43 +111,23 @@ public class CombatController : MonoBehaviour
             GameObject clone = Instantiate(wind_tiger, transform.position + transform.up, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             clone.name = "wind_tiger_attack";
-            DamageInstantaneousEffect wind_tiger_attack = clone.GetComponent<DamageInstantaneousEffect>();
-            wind_tiger_attack.SetDamage(1);
         }
         else if (current_element == Element.Wind && current_style == Style.Turtle)
         {
             GameObject clone = Instantiate(wind_turtle, transform.position, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            clone.name = "wind_turtle_zone";
-            clone.tag = gameObject.tag;
-            PulseEffect wind_turtle_zone = clone.GetComponent<PulseEffect>();
-            wind_turtle_zone.SetLifetime(.5f);
-            wind_turtle_zone.radius = .5f;
-            wind_turtle_zone.velocity = 40f;
-            wind_turtle_zone.acceleration = -10f;
-            wind_turtle_zone.origin = transform;
+            clone.GetComponent<WindTurtleEffect>().SetFollowing(transform);
         }
         else if (current_element == Element.Wind && current_style == Style.Bear)
         {
             GameObject clone = Instantiate(wind_bear, transform.position, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            clone.name = "wind_bear_zone";
-            clone.tag = gameObject.tag;
-            WindBearEffect wind_bear_zone = clone.GetComponent<WindBearEffect>();
-            wind_bear_zone.SetLifetime(5f);
-            wind_bear_zone.radius = 3f;
-            wind_bear_zone.velocity = .5f;
-            wind_bear_zone.acceleration = 0f;
-            wind_bear_zone.SetVortexStrength(1.2f);
-            wind_bear_zone.origin = wind_bear_zone.transform;
         }
         else if (current_element == Element.Earth && current_style == Style.Hawk)
         {
             GameObject clone = Instantiate(earth_hawk, transform.position, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            clone.name = "earth_hawk";
-            clone.tag = gameObject.tag;
-
+            
             clone.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
 
             body.velocity = -transform.up * movement_controller.speed * 3;
@@ -161,26 +142,25 @@ public class CombatController : MonoBehaviour
             health.LockState(1f);
             GetComponent<Animator>().SetBool("is_walking", false);
         }
+        else if (current_element == Element.Water && current_style == Style.Hawk)
+        {
+            GameObject go = Instantiate(water_hawk, transform.position + transform.up + transform.up, transform.rotation) as GameObject;
+            go.GetComponent<WaterHawkEffect>().direction = transform.up;
+        }
         else if (current_element == Element.Water && current_style == Style.Bear)
         {
             Instantiate(water_bear, transform.position, transform.rotation);
         }
         else if (current_element == Element.Water && current_style == Style.Turtle)
         {
-            GameObject go = Instantiate(water_turtle, transform.position, transform.rotation) as GameObject;
-            go.name = "water_turtle_zone";
-            go.tag = gameObject.tag;
-            DamagePulseEffect water_turtle_zone = go.GetComponent<DamagePulseEffect>();
-            water_turtle_zone.SetDamage(25f);
-            water_turtle_zone.SetLifetime(4.5f);
-            water_turtle_zone.radius = 2f;
-            water_turtle_zone.velocity = 2f;
-            water_turtle_zone.acceleration = -1f;
-            water_turtle_zone.origin = transform;
+            GameObject clone = Instantiate(water_turtle, transform.position, transform.rotation) as GameObject;
+            Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            clone.GetComponent<WaterTurtleEffect>().SetFollowing(transform);     
         }
         else if (current_element == Element.Water && current_style == Style.Tiger)
         {
-            Instantiate(water_tiger, transform.position, transform.rotation);
+            GameObject clone = Instantiate(water_tiger, transform.position, transform.rotation) as GameObject;
+            clone.GetComponent<WaterTigerEffect>().SetFollowing(transform);
         }
         else if (current_element == Element.Fire && current_style == Style.Hawk)
         {
@@ -193,6 +173,7 @@ public class CombatController : MonoBehaviour
     void castFireHawk(Vector3 direction, Quaternion rotation)
     {
         GameObject go = Instantiate(fire_hawk, transform.position + direction, rotation) as GameObject;
+        go.tag = "ally";
         go.GetComponent<FireHawkEffect>().SetDirection(direction);
     }
 }

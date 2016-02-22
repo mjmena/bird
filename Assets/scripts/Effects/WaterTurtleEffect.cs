@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WindBearEffect : MonoBehaviour {
+public class WaterTurtleEffect : MonoBehaviour
+{
     private float birth;
-    private float lifetime = 5f;
-    private float radius = 3f;
-    private float velocity = .5f;
-    private float acceleration = 0f;
-    private float vortex_strength = 1.2f;
-
+    private float lifetime = 4f;
+    private float damage = 25f;
+    private float radius = 2f;
+    private float velocity = 2f;
+    private float acceleration = -1f;
+    private Transform following;
+    
     void Start()
     {
         birth = Time.time;
-        name = "wind_bear";
         transform.localScale = transform.localScale * radius;
     }
 
@@ -23,6 +24,8 @@ public class WindBearEffect : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        transform.position = following.position;
+
         Vector3 unit_vector = transform.localScale;
         unit_vector.Normalize();
 
@@ -32,12 +35,14 @@ public class WindBearEffect : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.tag == "enemy")
+        if (collider.GetComponent<Damageable>() != null)
         {
-            Vector3 toward_center_vector = transform.position - collider.transform.position;
-            Vector3 toward_center_vector_strength = (toward_center_vector / toward_center_vector.magnitude) * vortex_strength;
-
-            collider.GetComponent<Rigidbody2D>().velocity += new Vector2(toward_center_vector_strength.x, toward_center_vector_strength.y);
+            collider.GetComponent<Damageable>().TakeDamage(damage * Time.deltaTime);
         }
+    }
+
+    public void SetFollowing(Transform following)
+    {
+        this.following = following;
     }
 }
