@@ -25,6 +25,8 @@ public class CombatController : MonoBehaviour
     public GameObject water_tiger;
     public GameObject fire_hawk;
     public GameObject fire_bear;
+    public GameObject fire_tiger;
+
 
     void Start()
     {
@@ -90,6 +92,11 @@ public class CombatController : MonoBehaviour
                 castElementStyleCombo();
 
             }
+        }
+
+        if (Input.GetKeyDown("`"))
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -174,6 +181,11 @@ public class CombatController : MonoBehaviour
             GameObject clone = Instantiate(fire_bear, transform.position+transform.up, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
+        else if (current_element == Element.Fire && current_style == Style.Tiger)
+        {
+            spawnFireTiger(transform.right*1.3f, transform.rotation);
+            spawnFireTiger(-transform.right*1.3f, transform.rotation);
+        }
     }
 
     void castFireHawk(Vector3 direction, Quaternion rotation)
@@ -181,6 +193,12 @@ public class CombatController : MonoBehaviour
         GameObject go = Instantiate(fire_hawk, transform.position + direction, rotation) as GameObject;
         go.tag = "ally";
         go.GetComponent<FireHawkEffect>().SetDirection(direction);
+    }
+
+    void spawnFireTiger(Vector3 direction, Quaternion rotation)
+    {
+        GameObject go = Instantiate(fire_tiger, transform.position + direction, rotation) as GameObject;
+        go.transform.parent = transform;
     }
 
     void OnDestroy()
