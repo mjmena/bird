@@ -19,6 +19,7 @@ public class CombatController : MonoBehaviour
     public GameObject wind_turtle;
     public GameObject wind_bear;
     public GameObject earth_hawk;
+    public GameObject earth_turtle;
     public GameObject water_hawk;
     public GameObject water_bear;
     public GameObject water_turtle;
@@ -151,9 +152,16 @@ public class CombatController : MonoBehaviour
             health.LockState(1f);
             GetComponent<Animator>().SetBool("is_walking", false);
         }
+        else if (current_element == Element.Earth && current_style == Style.Turtle)
+        {
+            GameObject clone = Instantiate(earth_turtle, transform.position + transform.right, transform.rotation) as GameObject;
+            EarthTurtleEffect earth_turtle_effect = clone.GetComponent<EarthTurtleEffect>();
+            earth_turtle_effect.source = movement_controller;
+            earth_turtle_effect.lifetime = 10;
+        }
         else if (current_element == Element.Water && current_style == Style.Hawk)
         {
-            GameObject go = Instantiate(water_hawk, transform.position + transform.up + transform.up, transform.rotation) as GameObject;
+            Instantiate(water_hawk, transform.position + transform.up + transform.up, transform.rotation);
         }
         else if (current_element == Element.Water && current_style == Style.Bear)
         {

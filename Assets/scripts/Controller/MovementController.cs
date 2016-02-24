@@ -5,7 +5,7 @@ public class MovementController : MonoBehaviour
 {
     private Rigidbody2D body;
     private Animator animator;
-
+    private bool is_moving;
     public float speed;
     private float input_disabled_until = 0;
 
@@ -32,14 +32,43 @@ public class MovementController : MonoBehaviour
                 float direction = Mathf.Atan2(input.y, input.x);
                 body.MoveRotation(direction * Mathf.Rad2Deg - 90);
                 animator.SetBool("is_walking", true);
+                is_moving = true; 
             }
             else {
                 animator.SetBool("is_walking", false);
+                is_moving = false;
             }
         }
+        else if(body.velocity != Vector2.zero)
+        {
+            is_moving = true; 
+        }
+        else
+        {
+            is_moving = false; 
+        }
     }
+
     public void DisablePlayerInput(float duration)
     {
         input_disabled_until = Time.time + duration;
+    }
+
+    public bool IsMoving()
+    {
+        return is_moving;
+    }
+
+    public Vector2 GetVelocity()
+    {
+        if (IsMoving() && body.velocity == Vector2.zero)
+        {
+            return transform.up * speed * Time.deltaTime;
+        }else
+        {
+            return body.velocity * Time.deltaTime;
+        }
+
+        
     }
 }

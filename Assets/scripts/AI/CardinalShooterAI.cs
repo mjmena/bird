@@ -22,12 +22,8 @@ public class CardinalShooterAI : MonoBehaviour
     }
 
     void spawnProjectile(Vector3 direction)
-    {
-        Vector3 bullet_position = transform.position + direction;
-        Vector3 bullet_velocity = direction * projectile_speed;
-
-        
-        GameObject go = Instantiate(projectile, bullet_position, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI - 90)) as GameObject;
+    {    
+        GameObject go = Instantiate(projectile, transform.position + direction, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI - 90)) as GameObject;
         
         go.name = "enemy_projectile";
         go.tag = gameObject.tag;
