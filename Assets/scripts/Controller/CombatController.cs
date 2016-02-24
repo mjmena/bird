@@ -27,7 +27,8 @@ public class CombatController : MonoBehaviour
     public GameObject fire_hawk;
     public GameObject fire_bear;
     public GameObject fire_tiger;
-
+    public GameObject fire_turtle;
+    public FireTurtleEffect fire_turtle_effect;
 
     void Start()
     {
@@ -38,6 +39,12 @@ public class CombatController : MonoBehaviour
 
     void Update()
     {
+        if (fire_turtle_effect != null && Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            fire_turtle_effect.Explode();
+            fire_turtle_effect = null;
+        }
+        
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (next_element == Element.None)
@@ -138,7 +145,7 @@ public class CombatController : MonoBehaviour
         {
             GameObject clone = Instantiate(earth_hawk, transform.position, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            
+
             clone.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
             body.AddForce(-transform.up * movement_controller.speed * 2.5f, ForceMode2D.Impulse);
             movement_controller.DisablePlayerInput(.2f);
@@ -171,7 +178,7 @@ public class CombatController : MonoBehaviour
         {
             GameObject clone = Instantiate(water_turtle, transform.position, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            clone.GetComponent<WaterTurtleEffect>().SetFollowing(transform);     
+            clone.GetComponent<WaterTurtleEffect>().SetFollowing(transform);
         }
         else if (current_element == Element.Water && current_style == Style.Tiger)
         {
@@ -186,13 +193,20 @@ public class CombatController : MonoBehaviour
         }
         else if (current_element == Element.Fire && current_style == Style.Bear)
         {
-            GameObject clone = Instantiate(fire_bear, transform.position+transform.up, transform.rotation) as GameObject;
+            GameObject clone = Instantiate(fire_bear, transform.position + transform.up, transform.rotation) as GameObject;
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
         else if (current_element == Element.Fire && current_style == Style.Tiger)
         {
-            spawnFireTiger(transform.right*1.3f, transform.rotation);
-            spawnFireTiger(-transform.right*1.3f, transform.rotation);
+            spawnFireTiger(transform.right * 1.3f, transform.rotation);
+            spawnFireTiger(-transform.right * 1.3f, transform.rotation);
+        }
+        else if (current_element == Element.Fire && current_style == Style.Turtle)
+        {
+            GameObject clone = Instantiate(fire_turtle, transform.position, transform.rotation) as GameObject;
+            clone.transform.parent = transform;
+            Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            fire_turtle_effect = clone.GetComponent<FireTurtleEffect>();
         }
     }
 
@@ -212,7 +226,7 @@ public class CombatController : MonoBehaviour
     void OnDestroy()
     {
         string scene = SceneManager.GetActiveScene().name;
-        SceneManager.UnloadScene(scene);
+        //SceneManager.UnloadScene(scene);
         SceneManager.LoadScene(scene);
     }
 }
