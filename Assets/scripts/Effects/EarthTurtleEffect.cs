@@ -5,8 +5,7 @@ public class EarthTurtleEffect : MonoBehaviour
     private float birth;
     public float lifetime;
     public float damage = 30;
-    public float speed;
-    public MovementController source; 
+    public Movable source; 
     public float rotation = 360; 
 
     void Start()

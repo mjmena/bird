@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 
-public class FireTigerEffect : MonoBehaviour
+public class EarthTigerEffect : MonoBehaviour
 {
     private float birth;
-    private float lifetime = 5f;
-    private float damage = 50;
-    
+    private float lifetime = .125f;
+    private float damage = 49;
+
     void Start()
     {
         birth = Time.time;
-        name = "fire_tiger";
     }
 
     void Update()

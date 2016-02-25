@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 public class CombatController : MonoBehaviour
 {
     private Rigidbody2D body;
-    private MovementController movement_controller;
+    private Movable movable;
     private Damageable health;
-
     private enum Element { None, Wind, Earth, Water, Fire };
     private enum Style { None, Hawk, Bear, Tiger, Turtle };
 
@@ -20,6 +19,7 @@ public class CombatController : MonoBehaviour
     public GameObject wind_bear;
     public GameObject earth_hawk;
     public GameObject earth_turtle;
+    public GameObject earth_tiger;
     public GameObject water_hawk;
     public GameObject water_bear;
     public GameObject water_turtle;
@@ -32,8 +32,7 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        movement_controller = GetComponent<MovementController>();
+        movable = GetComponent<Movable>();
         health = GetComponent<Damageable>();
     }
 
@@ -119,10 +118,7 @@ public class CombatController : MonoBehaviour
         if (current_element == Element.Wind && current_style == Style.Hawk)
         {
             GetComponent<Animator>().SetBool("is_dashing", true);
-            //body.velocity = transform.up * movement_controller.speed * 5;
-            body.AddForce(transform.up * movement_controller.speed * 5, ForceMode2D.Impulse);
-            movement_controller.DisablePlayerInput(.2f);
-
+            movable.AddForce(transform.up * movable.speed * 5, ForceMode2D.Impulse, .2f);
         }
         else if (current_element == Element.Wind && current_style == Style.Tiger)
         {
@@ -147,23 +143,25 @@ public class CombatController : MonoBehaviour
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
             clone.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
-            body.AddForce(-transform.up * movement_controller.speed * 2.5f, ForceMode2D.Impulse);
-            movement_controller.DisablePlayerInput(.2f);
+            movable.AddForce(-transform.up * movable.speed * 2.5f, ForceMode2D.Impulse, .2f);
             GetComponent<Animator>().SetBool("is_dashing", true);
         }
         else if (current_element == Element.Earth && current_style == Style.Bear)
         {
-            body.velocity = Vector3.zero;
-
-            movement_controller.DisablePlayerInput(1f);
-            health.LockState(1f);
+            movable.AddForce(Vector3.zero, ForceMode2D.Force, 1f);
             GetComponent<Animator>().SetBool("is_walking", false);
+        }
+        else if (current_element == Element.Earth && current_style == Style.Tiger)
+        {
+            movable.AddTorque(-3.151f, ForceMode2D.Impulse, .125f);
+            GameObject go = Instantiate(earth_tiger, transform.position + (-transform.up - transform.right).normalized, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 135)) as GameObject;
+            go.transform.parent = transform;
         }
         else if (current_element == Element.Earth && current_style == Style.Turtle)
         {
             GameObject clone = Instantiate(earth_turtle, transform.position + transform.right, transform.rotation) as GameObject;
             EarthTurtleEffect earth_turtle_effect = clone.GetComponent<EarthTurtleEffect>();
-            earth_turtle_effect.source = movement_controller;
+            earth_turtle_effect.source = movable;
             earth_turtle_effect.lifetime = 10;
         }
         else if (current_element == Element.Water && current_style == Style.Hawk)
@@ -199,7 +197,6 @@ public class CombatController : MonoBehaviour
         else if (current_element == Element.Fire && current_style == Style.Tiger)
         {
             spawnFireTiger(transform.right * 1.2f, transform.rotation);
-            //spawnFireTiger(-transform.right * 1.3f, transform.rotation);
         }
         else if (current_element == Element.Fire && current_style == Style.Turtle)
         {

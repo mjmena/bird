@@ -5,12 +5,11 @@ public class Movable : MonoBehaviour {
     public float speed;
     public float rotational_speed;
     public Vector3 direction;
-    private bool is_moving;
-    private bool is_strafing;
-    private bool is_kinetic;
+    public bool is_strafing;
+    private float is_kinematic_until;
 
 
-    private Rigidbody2D body;
+    public Rigidbody2D body;
 
 
     void Start () {
@@ -19,36 +18,45 @@ public class Movable : MonoBehaviour {
 	
 	void FixedUpdate () {
         body.WakeUp();
-        if (!is_kinetic)
+        if (IsKinematic())
         {
             body.velocity = Vector2.zero;
             body.angularVelocity = 0;
 
-            transform.Translate(direction * speed * Time.deltaTime);
-            if (is_moving && !is_strafing)
+            transform.position += (direction * speed * Time.deltaTime);
+            if (IsMoving() && !is_strafing)
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg - 90), rotational_speed);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg-90), rotational_speed * Time.deltaTime);
             }
         }
     }
 
     public bool IsMoving()
     {
-        return is_moving;
+        if (IsKinematic())
+        {
+            return direction != Vector3.zero;
+        }
+        else
+        {
+            return body.velocity != Vector2.zero;
+        }
     }
 
-    public bool IsStrafing()
+    public bool IsKinematic()
     {
-        return IsStrafing();
+        return is_kinematic_until <= Time.time;
     }
 
-    public bool IsKinetic()
+    public void AddForce(Vector3 force, ForceMode2D force_mode, float duration)
     {
-        return is_kinetic;
+        body.AddForce(force, force_mode);
+        is_kinematic_until = Time.time + duration;
     }
 
-    public void SetIsKinetic(bool is_kinetic)
+    public void AddTorque(float torque, ForceMode2D force_mode, float duration)
     {
-        this.is_kinetic = is_kinetic; 
+        body.AddTorque(torque, force_mode);
+        is_kinematic_until = Time.time + duration;
     }
 }
