@@ -198,8 +198,8 @@ public class CombatController : MonoBehaviour
         }
         else if (current_element == Element.Fire && current_style == Style.Tiger)
         {
-            spawnFireTiger(transform.right * 1.3f, transform.rotation);
-            spawnFireTiger(-transform.right * 1.3f, transform.rotation);
+            spawnFireTiger(transform.right * 1.2f, transform.rotation);
+            //spawnFireTiger(-transform.right * 1.3f, transform.rotation);
         }
         else if (current_element == Element.Fire && current_style == Style.Turtle)
         {

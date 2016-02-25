@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FireTigerEffect : MonoBehaviour
 {
     private float birth;
-    private float lifetime = 1;
+    private float lifetime = 5f;
     private float damage = 50;
     public Transform source;
 
@@ -29,5 +28,5 @@ public class FireTigerEffect : MonoBehaviour
             collider.GetComponent<Damageable>().TakeDamage(damage);
         }
     }
-    
+
 }

@@ -29,8 +29,11 @@ public class MovementController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                float direction = Mathf.Atan2(input.y, input.x);
-                body.MoveRotation(direction * Mathf.Rad2Deg - 90);
+                if (!Input.GetKey(KeyCode.LeftShift))
+                {
+                    float direction = Mathf.Atan2(input.y, input.x);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, direction * Mathf.Rad2Deg - 90), 10);
+                }
                 animator.SetBool("is_walking", true);
                 is_moving = true; 
             }
