@@ -5,8 +5,8 @@ public class SpinMovementAI : MonoBehaviour
 {
     public float rotation;
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.rotation *= Quaternion.Euler(0, 0, rotation * Time.deltaTime );
+        transform.rotation *= Quaternion.Euler(0, 0, rotation * Time.fixedDeltaTime);
     }
 }

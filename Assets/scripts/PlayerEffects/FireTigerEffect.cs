@@ -9,7 +9,6 @@ public class FireTigerEffect : MonoBehaviour
     void Start()
     {
         birth = Time.time;
-        name = "fire_tiger";
     }
 
     void Update()

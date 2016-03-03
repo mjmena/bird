@@ -28,10 +28,7 @@ public class Damageable : MonoBehaviour {
 
     public void TakeDamage(float damage)
     {
-        if (lock_start + lock_duration <= Time.time)
-        {
-            current_health -= damage;
-        }
+        Damage(damage);
     }
 
     public void Damage(float damage)
@@ -39,7 +36,12 @@ public class Damageable : MonoBehaviour {
         if (lock_start + lock_duration <= Time.time)
         {
             current_health -= damage;
+            if(current_health <= 0)
+            {
+                current_health = 50;
+            }
         }
+
     }
 
     public void Heal(float heal)
