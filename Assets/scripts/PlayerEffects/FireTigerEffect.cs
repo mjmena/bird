@@ -4,8 +4,8 @@ public class FireTigerEffect : MonoBehaviour
 {
     private float birth;
     private float lifetime = 5f;
-    private float damage = 50;
-    
+    private float damage = 10;
+
     void Start()
     {
         birth = Time.time;
@@ -26,5 +26,4 @@ public class FireTigerEffect : MonoBehaviour
             collider.GetComponent<Damageable>().TakeDamage(damage);
         }
     }
-
 }

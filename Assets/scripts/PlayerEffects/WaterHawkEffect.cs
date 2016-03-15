@@ -12,10 +12,10 @@ public class WaterHawkEffect : MonoBehaviour
     void Start()
     {
         birth = Time.time;
-        spawnOrbiter(transform.position + transform.up);
         spawnOrbiter(transform.position + transform.right);
-        spawnOrbiter(transform.position - transform.right);
-        spawnOrbiter(transform.position - transform.up);
+		spawnOrbiter(transform.position + 2*transform.right);
+		spawnOrbiter(transform.position - transform.right);
+		spawnOrbiter(transform.position - 2*transform.right);
     }
 
     void spawnOrbiter(Vector3 position)
@@ -26,7 +26,7 @@ public class WaterHawkEffect : MonoBehaviour
         orbiter_effect.direction = transform.up;
         orbiter_effect.speed = speed;
         orbiter_effect.lifetime = lifetime;
-        orbiter_effect.damage = damage / 2;
+        orbiter_effect.damage = damage;
     }
 
 
