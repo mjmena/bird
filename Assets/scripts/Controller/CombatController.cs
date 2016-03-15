@@ -14,7 +14,6 @@ public class CombatController : MonoBehaviour
     private Style current_style = Style.Hawk;
 
     private Element next_element = Element.None;
-    public GameObject wind_tiger;
     public GameObject wind_tiger_whip;
     public GameObject wind_turtle;
     public GameObject wind_bear;
@@ -155,7 +154,7 @@ public class CombatController : MonoBehaviour
         }
         else if (current_element == Element.Earth && current_style == Style.Tiger)
         {
-            movable.AddTorque(-3.151f, ForceMode2D.Impulse, .125f);
+			movable.SetRotation(-180f, .125f);
             GameObject go = Instantiate(earth_tiger, transform.position + (-transform.up - transform.right).normalized, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 135)) as GameObject;
             go.transform.parent = transform;
         }

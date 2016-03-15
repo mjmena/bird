@@ -4,7 +4,7 @@ using System.Collections;
 public class WindTigerWhipEffect : MonoBehaviour {
     public float delay = 2f;
     public Movable source;
-    private bool hasArrived = false; 
+    private bool hasArrived = false;
 
     void FixedUpdate()
     {
