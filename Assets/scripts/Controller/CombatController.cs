@@ -37,7 +37,41 @@ public class CombatController : MonoBehaviour
         health = GetComponent<Damageable>();
     }
 
-    void Update()
+	void Update() {
+		if (fire_turtle_effect != null && Input.GetKeyUp(KeyCode.RightArrow)) {
+			fire_turtle_effect.Explode();
+			fire_turtle_effect = null;
+		}
+
+		current_style = Style.None;
+
+		if (Input.GetKeyDown(KeyCode.UpArrow)) {
+			current_style = Style.Hawk;
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+			current_style = Style.Bear;
+		}
+		else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+			current_style = Style.Tiger;
+		}
+		else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+			current_style = Style.Turtle;
+		}
+
+		if (Input.GetKeyDown(KeyCode.U)) {
+			current_element = Element.Wind;
+		} else if (Input.GetKeyDown(KeyCode.I)) {
+			current_element = Element.Earth;
+		} else if (Input.GetKeyDown(KeyCode.O)) {
+			current_element = Element.Water;
+		} else if (Input.GetKeyDown(KeyCode.P)) {
+			current_element = Element.Fire;
+		}
+
+		castElementStyleCombo();
+	}
+
+    void UpdateOld()
     {
         if (fire_turtle_effect != null && Input.GetKeyUp(KeyCode.RightArrow))
         {
@@ -115,11 +149,14 @@ public class CombatController : MonoBehaviour
 
     private void castElementStyleCombo()
     {
+		if (current_style == Style.None) {
+			return;
+		}
         Debug.Log("Using " + current_element + " + " + current_style);
         if (current_element == Element.Wind && current_style == Style.Hawk)
         {
             GetComponent<Animator>().SetBool("is_dashing", true);
-            movable.AddForce(transform.up * movable.speed * 5, ForceMode2D.Impulse, .2f);
+			movable.SetSpeed(5f, .2f);
         }
         else if (current_element == Element.Wind && current_style == Style.Tiger)
         {
@@ -144,12 +181,12 @@ public class CombatController : MonoBehaviour
             Physics2D.IgnoreCollision(clone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
             clone.GetComponent<Rigidbody2D>().velocity = transform.up * 2;
-            movable.AddForce(-transform.up * movable.speed * 2.5f, ForceMode2D.Impulse, .2f);
+			movable.SetSpeed(-2.5f, .2f);
             GetComponent<Animator>().SetBool("is_dashing", true);
         }
         else if (current_element == Element.Earth && current_style == Style.Bear)
         {
-            movable.AddForce(Vector3.zero, ForceMode2D.Force, 1f);
+            movable.SetSpeed(0, 1f);
             GetComponent<Animator>().SetBool("is_walking", false);
         }
         else if (current_element == Element.Earth && current_style == Style.Tiger)
