@@ -33,6 +33,7 @@ public class CombatController : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.I)) {
             current_element = Element.Earth;
             GameObject go = Instantiate(boulder_effect, transform.position + transform.up, transform.rotation) as GameObject;
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), go.GetComponent<Collider2D>());
             boulder = go.GetComponent<Boulder>();
             boulder.source = GetComponent<Movable>();
         } else if (Input.GetKeyDown(KeyCode.O)) {

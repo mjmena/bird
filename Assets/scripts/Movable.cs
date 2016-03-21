@@ -35,14 +35,30 @@ public class Movable : MonoBehaviour {
 
 			transform.position += (direction * current_move_speed * Time.fixedDeltaTime);
 			if (IsMoving () && !is_strafing) {
-				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg - 90), default_rotation_speed * Time.fixedDeltaTime);
-			}
+                transform.rotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg - 90);
+            }
 		} else {
 			transform.position += transform.up * current_move_speed * Time.fixedDeltaTime;
 			transform.Rotate (new Vector3 (0, 0, current_rotation_speed * Time.fixedDeltaTime));
 		}
     }
 
+    /// <summary>
+    /// Gets the next position of the Movable
+    /// </summary>
+    /// <returns>The next position of the Movable</returns>
+    public Vector3 GetNextPosition(){
+        if(IsMoving()){
+            return transform.position + direction * current_move_speed * Time.fixedDeltaTime; 
+        } else {
+            return transform.position;
+        } 
+    }
+
+    /// <summary>
+    /// Determines whether this instance is moving.
+    /// </summary>
+    /// <returns><c>true</c> if this instance is moving; otherwise, <c>false</c>.</returns>
     public bool IsMoving()
     {
         if (IsKinematic())
@@ -55,11 +71,20 @@ public class Movable : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Determines whether this instance is kinematic (not affected by physics) 
+    /// </summary>
+    /// <returns><c>true</c> if this instance is kinematic; otherwise, <c>false</c>.</returns>
     public bool IsKinematic()
     {
         return is_kinematic_until <= Time.time;
 	}
 
+    /// <summary>
+    /// Modifies the default speed of the Movable by a factor for a duration 
+    /// </summary>
+    /// <param name="speedFactor">Modify Movable's speed by this factor</param>
+    /// <param name="duration">Modify Movable's speed for the time in seconds/param>
 	public void SetSpeed(float speedFactor, float duration)
 	{
 		this.current_move_speed = default_move_speed * speedFactor;

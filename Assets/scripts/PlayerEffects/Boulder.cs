@@ -5,21 +5,21 @@ public class Boulder : MonoBehaviour {
     public Movable source; 
     public float radius;
 
-    private float rotation = 360; 
+    private float rotation = 360 * 4; 
     private float max_radius = 8f; 
     private float min_radius = 2f;
-    private float radius_delta = .5f;
+    private float radius_delta = 1f;
 
 
     void Start(){
-        radius = 5f;
+        radius = min_radius;
     }
 
     void FixedUpdate()
     {
-        Vector3 desired_position = source.transform.position + (transform.position - source.transform.position).normalized * radius;
-        transform.position = Vector3.MoveTowards(transform.position, desired_position, .5f);
-        transform.RotateAround(source.transform.position, Vector3.forward, rotation * Time.fixedDeltaTime);
+        Vector3 desired_position = source.GetNextPosition() + (transform.position - source.GetNextPosition()).normalized * radius;
+        transform.position = desired_position;
+        transform.RotateAround(source.transform.position, Vector3.forward, rotation/radius  * Time.fixedDeltaTime);
     }
         
     public void IncreaseRadius(){
