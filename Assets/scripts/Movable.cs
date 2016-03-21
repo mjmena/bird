@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class Movable : MonoBehaviour {
 	public Rigidbody2D body;
@@ -74,4 +75,8 @@ public class Movable : MonoBehaviour {
 		is_entering_kinematic = true; 
 		is_kinematic_until = Time.time + duration;
 	}
+
+    public float GetSpeed(){
+        return current_move_speed;
+    }
 }

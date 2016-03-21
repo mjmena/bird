@@ -3,7 +3,6 @@
 public class CardinalShooterAI : MonoBehaviour
 {
     public GameObject projectile;
-    private float epsilon = .72f;
 
     void Update()
     {
