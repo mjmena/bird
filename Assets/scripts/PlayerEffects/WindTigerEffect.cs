@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WindTigerEffect : MonoBehaviour{
-    private float damage = 30;
-    private bool has_collided = false; 
+public class WindTigerEffect : MonoBehaviour {
+    public float delay = 2f;
+    public Movable source;
+    private bool hasArrived = false;
 
-
-    void Update()
+    void FixedUpdate()
     {
-        if (has_collided)
+        if(GetComponent<Timed>().GetBirth() + delay < Time.fixedTime)
         {
-            Destroy(gameObject);
-        }
+            transform.position = (Vector3) Vector2.MoveTowards(transform.position, source.transform.position + source.transform.up, 50*Time.fixedDeltaTime);
 
-        has_collided = true; 
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<Damageable>() != null)
-        {
-            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
+            if (transform.position == source.transform.position + source.transform.up && !hasArrived)
+            {
+                GetComponent<Timed>().SetLifetime(.1f);
+                delay = 0f;
+                hasArrived = true;
+            }
         }
     }
 }

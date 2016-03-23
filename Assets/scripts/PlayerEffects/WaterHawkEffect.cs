@@ -4,14 +4,10 @@ using System.Collections;
 public class WaterHawkEffect : MonoBehaviour
 {
     public GameObject orbiter; 
-    private float birth;
-    private float lifetime = 2;
-    private float damage = 30;
-    private float speed = 15;
+    public float speed = 15;
      
     void Start()
     {
-        birth = Time.time;
         spawnOrbiter(transform.position + transform.right);
 		spawnOrbiter(transform.position + 2*transform.right);
 		spawnOrbiter(transform.position - transform.right);
@@ -25,26 +21,11 @@ public class WaterHawkEffect : MonoBehaviour
         orbiter_effect.center = transform.position;
         orbiter_effect.direction = transform.up;
         orbiter_effect.speed = speed;
-        orbiter_effect.lifetime = lifetime;
-        orbiter_effect.damage = damage;
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
-        if (birth + lifetime <= Time.time)
-        {
-            Destroy(gameObject);
-        }
-        transform.position += transform.up*Time.deltaTime*speed; 
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.GetComponent<Damageable>() != null)
-        {
-            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
-        }
-        lifetime = 0;
+        transform.position += transform.up*Time.fixedDeltaTime*speed; 
     }
 }
