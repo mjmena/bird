@@ -2,7 +2,11 @@
 using System.Collections;
 
 public class FireHawkEffect : MonoBehaviour {
-    public float speed = 30;
+    private float speed = 15;
+
+    private void Start() {
+        Destroy(gameObject, 2f);
+    }
 
     public void SetDirection(Vector3 direction)
     {

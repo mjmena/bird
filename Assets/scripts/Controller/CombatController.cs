@@ -5,7 +5,12 @@ using System.Runtime.CompilerServices;
 using UnityEngine.Networking.Types;
 
 public class CombatController : MonoBehaviour {
+    private FireController fire_controller;
     private Element current_element = Element.Wind;
+
+    private void Start(){
+        fire_controller = GetComponent<FireController>();
+    }
 
     public GameObject wind_tiger_effect;
     private void castWindStyleCombo(Style style){
@@ -32,6 +37,12 @@ public class CombatController : MonoBehaviour {
         if(style == Style.Hawk){
             Instantiate(water_hawk_effect, transform.position + transform.up + transform.up, transform.rotation);
         } else if(style == Style.Bear){
+        }
+    }
+
+    private void castFireStyleCombo(Style style){
+        if (style == Style.Hawk) {
+            fire_controller.CastHawk();
         }
     }
         
@@ -83,6 +94,8 @@ public class CombatController : MonoBehaviour {
             castEarthStyleCombo(style);
         }else if(element == Element.Water){
             castWaterStyleCombo(style);
+        }else if(element == Element.Fire){
+            castFireStyleCombo(style);
         }
     }
 
