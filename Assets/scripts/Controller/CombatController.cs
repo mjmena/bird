@@ -1,123 +1,51 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
-using System.Runtime.CompilerServices;
-using UnityEngine.Networking.Types;
+using Spell;
+using System;
 
 public class CombatController : MonoBehaviour {
-    private FireController fire_controller;
-    private Element current_element = Element.Wind;
+    private SpellController current_controller;
 
-    private void Start(){
-        fire_controller = GetComponent<FireController>();
+    void Start() {
+        set_element(Element.Wind);
     }
 
-    public GameObject wind_tiger_effect;
-    private void castWindStyleCombo(Style style){
-        if(style == Style.Tiger){
-            GameObject clone = Instantiate(wind_tiger_effect, transform.position, transform.rotation) as GameObject;
-            clone.GetComponent<WindTigerEffect>().source = GetComponent<Movable>();
+    void Update() {
+        Style current_style = Style.None; 
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            current_style = Style.Hawk;
+        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            current_style = Style.Bear; 
+        } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            current_style = Style.Tiger;         
+        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            current_style = Style.Turtle;         
+        }
+
+        current_controller.cast(current_style);
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            set_element(Element.Wind);
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            set_element(Element.Earth);
+        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            set_element(Element.Fire);
+        } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            set_element(Element.Water);
+        } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            set_element(Element.Water);
         }
     }
 
-    public GameObject boulder_effect; 
-    private EarthBoulderEffect boulder = null; 
-    private void castEarthStyleCombo(Style style){
-        if(style == Style.Hawk){
-            boulder.IncreaseRadius();
-        } else if(style == Style.Bear){
-            boulder.DecreaseRadius();
-        } else if(style == Style.Tiger){
-            boulder.Untether();
+    private void set_element(Element element){
+        if(current_controller != null){
+            current_controller.disable();
         }
-    }
 
-    public GameObject water_hawk_effect; 
-    private void castWaterStyleCombo(Style style){
-        if(style == Style.Hawk){
-            Instantiate(water_hawk_effect, transform.position + transform.up + transform.up, transform.rotation);
-        } else if(style == Style.Bear){
-        }
-    }
-
-    private void castFireStyleCombo(Style style){
-        if (style == Style.Hawk) {
-            fire_controller.CastHawk();
-        }
+        current_controller = GetComponent(element.ToString() + "Controller") as SpellController;
+        current_controller.enable();
     }
         
-    void Update() {
-        if(boulder != null){
-            if(current_element != Element.Earth){
-                Destroy(boulder.gameObject);
-            }else{
-                if(!boulder.IsTethered()){
-                    GameObject go = Instantiate(boulder_effect, transform.position + transform.up, transform.rotation) as GameObject;
-                    boulder = go.GetComponent<EarthBoulderEffect>();
-                    boulder.source = GetComponent<Movable>();
-                }
-            }
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            castElementStyleCombo(current_element, Style.Hawk); 
-        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            castElementStyleCombo(current_element, Style.Bear); 
-        } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            castElementStyleCombo(current_element, Style.Tiger);         
-        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            castElementStyleCombo(current_element, Style.Turtle);         
-        }
-
-
-
-        if (Input.GetKeyDown(KeyCode.U)) {
-            current_element = Element.Wind;
-        } else if (Input.GetKeyDown(KeyCode.I)) {
-            current_element = Element.Earth;
-            GameObject go = Instantiate(boulder_effect, transform.position + transform.up, transform.rotation) as GameObject;
-            boulder = go.GetComponent<EarthBoulderEffect>();
-            boulder.source = GetComponent<Movable>();
-        } else if (Input.GetKeyDown(KeyCode.O)) {
-            current_element = Element.Water;
-        } else if (Input.GetKeyDown(KeyCode.P)) {
-            current_element = Element.Fire;
-        }
-   }
-
-
-    private void castElementStyleCombo(Element element, Style style) {
-        if(element == Element.Wind){
-            castWindStyleCombo(style);
-        }else if(element == Element.Earth){
-            castEarthStyleCombo(style);
-        }else if(element == Element.Water){
-            castWaterStyleCombo(style);
-        }else if(element == Element.Fire){
-            castFireStyleCombo(style);
-        }
+    public int GetCurrentElement() {
+        return (int)current_controller.get_element();
     }
-
-    public int GetCurrentElement(){
-        return (int) current_element;
-    }
-
-    private enum Element {
-        None,
-        Wind,
-        Earth,
-        Water,
-        Fire}
-
-    ;
-
-    private enum Style {
-        None,
-        Hawk,
-        Bear,
-        Tiger,
-        Turtle}
-
-    ;
 }
