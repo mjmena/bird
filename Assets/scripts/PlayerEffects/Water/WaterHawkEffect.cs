@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class WaterHawkEffect : MonoBehaviour
 {
     public GameObject orbiter; 
     public float speed = 15;
-     
+    public float lifetime = 2;
+
     void Start()
     {
+        Destroy(gameObject, lifetime);
         spawnOrbiter(transform.position + transform.right);
 		spawnOrbiter(transform.position + 2*transform.right);
 		spawnOrbiter(transform.position - transform.right);
@@ -21,11 +24,12 @@ public class WaterHawkEffect : MonoBehaviour
         orbiter_effect.center = transform.position;
         orbiter_effect.direction = transform.up;
         orbiter_effect.speed = speed;
+        orbiter_effect.lifetime = lifetime;
     }
 
 
     void FixedUpdate()
     {
-        transform.position += transform.up*Time.fixedDeltaTime*speed; 
+        transform.position += transform.up * Time.fixedDeltaTime * speed; 
     }
 }

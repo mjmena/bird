@@ -3,6 +3,10 @@
 public class RudeDudeProjectile : MonoBehaviour {
     public float speed;
 
+    void Start(){
+        Destroy(gameObject, 2);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Damageable>() != null)

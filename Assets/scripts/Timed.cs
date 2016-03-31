@@ -1,31 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 
-public class Timed : MonoBehaviour {
-    private float birth;
-    public float lifetime;
-    
-    void Start()
-    {
-        birth = Time.time;
-    }
+public class Timed{
+    private float lifetime;
+    private Stopwatch timer;
 
-    void Update()
-    {
-        if (birth + lifetime <= Time.time)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void SetLifetime(float lifetime)
-    {
-        birth = Time.time;
+    public Timed(float lifetime){
+        timer = new Stopwatch();
+        timer.Start();
         this.lifetime = lifetime;
     }
 
-    public float GetBirth()
-    {
-        return birth;
+    public bool IsElapsed(){
+        return (lifetime - timer.ElapsedMilliseconds) < 0;
     }
 }

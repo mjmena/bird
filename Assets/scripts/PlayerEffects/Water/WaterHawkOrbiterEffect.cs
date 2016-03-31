@@ -6,6 +6,11 @@ public class WaterHawkOrbiterEffect : MonoBehaviour
     public float speed;
     public Vector3 center;
     public Vector3 direction;
+    public float lifetime; 
+
+    void Start(){
+        Destroy(gameObject, lifetime);
+    }
 
     void Update()
     {
