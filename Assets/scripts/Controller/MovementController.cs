@@ -14,7 +14,7 @@ public class MovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (movable.IsKinematic())
+        if (!movable.IsLocked())
         {
             animator.SetBool("is_dashing", false);
 
